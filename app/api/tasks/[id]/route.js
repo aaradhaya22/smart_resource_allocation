@@ -1,0 +1,37 @@
+import { NextResponse } from 'next/server';
+import { db } from '@/lib/db';
+
+export async function PATCH(request, { params }) {
+  try {
+    const { id } = await params;
+    const body = await request.json();
+    const tasks = await db.getTasks();
+    const index = tasks.findIndex(t => t.id === id);
+    
+    if (index === -1) return NextResponse.json({ error: 'Task not found' }, { status: 404 });
+    
+    if (body.status) tasks[index].status = body.status;
+    
+    await db.saveTasks(tasks);
+    return NextResponse.json(tasks[index]);
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
+
+export async function DELETE(request, { params }) {
+  try {
+    const { id } = await params;
+    const tasks = await db.getTasks();
+    const index = tasks.findIndex(t => t.id === id);
+    
+    if (index === -1) return NextResponse.json({ error: 'Task not found' }, { status: 404 });
+    
+    tasks.splice(index, 1);
+    await db.saveTasks(tasks);
+    
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
