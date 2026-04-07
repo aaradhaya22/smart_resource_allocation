@@ -83,8 +83,8 @@ export default function RootLayout({ children }) {
               )}
               <div 
                 ref={dropdownRef}
-                className="glass-panel" 
-                style={{padding: '16px', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', position: 'relative'}}
+                className="bg-white dark:bg-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 shadow-lg" 
+                style={{padding: '16px', display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer', position: 'relative', borderRadius: '16px'}}
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               >
                 <div style={{width: '36px', height: '36px', borderRadius: '50%', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', color: '#fff'}}>
@@ -100,7 +100,7 @@ export default function RootLayout({ children }) {
                 
                 {/* Dropdown Menu */}
                 {isDropdownOpen && (
-                  <div className="glass-panel animate-fade-in" style={{
+                  <div className="bg-white dark:bg-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 shadow-lg animate-fade-in" style={{
                     position: 'absolute', 
                     bottom: 'calc(100% + 12px)', 
                     left: 0, 
@@ -110,7 +110,7 @@ export default function RootLayout({ children }) {
                     flexDirection: 'column',
                     gap: '4px',
                     zIndex: 50,
-                    boxShadow: '0 -8px 32px rgba(0,0,0,0.4)'
+                    borderRadius: '16px'
                   }}>
                     <div style={{padding: '10px 12px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '8px'}} className="nav-link">
                       <span style={{fontSize: '16px'}}>👤</span> Profile

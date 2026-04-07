@@ -46,8 +46,8 @@ export default function Chatbot() {
       
       {/* Chat Window */}
       {isOpen && (
-        <div className="glass-panel animate-fade-in" style={{
-          width: '350px', height: '450px', marginBottom: '16px', display: 'flex', flexDirection: 'column', padding: '0', overflow: 'hidden', boxShadow: '0 8px 40px rgba(0,0,0,0.5)'
+        <div className="bg-white dark:bg-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 shadow-lg animate-fade-in" style={{
+          width: '350px', height: '450px', marginBottom: '16px', display: 'flex', flexDirection: 'column', padding: '0', overflow: 'hidden', borderRadius: '16px'
         }}>
           <div style={{ background: 'linear-gradient(135deg, var(--accent-blue), var(--accent-purple))', padding: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px'}}>
