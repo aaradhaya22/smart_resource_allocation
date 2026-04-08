@@ -5,6 +5,31 @@ import Link from 'next/link';
 export default function VolunteersPage() {
   const [volunteers, setVolunteers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [editingId, setEditingId] = useState(null);
+  const [editAddress, setEditAddress] = useState("");
+
+  const startEditing = (vol) => {
+    setEditingId(vol.id);
+    setEditAddress(vol.location);
+  };
+
+  const saveAddress = async (id) => {
+    try {
+      const res = await fetch(`/api/volunteers/${id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ location: editAddress }),
+      });
+      if (res.ok) {
+        setVolunteers(volunteers.map(v => v.id === id ? { ...v, location: editAddress } : v));
+        setEditingId(null);
+      }
+    } catch (error) {
+      console.error("Failed to update volunteer address", error);
+    }
+  };
 
   useEffect(() => {
     fetch('/api/volunteers')
@@ -59,7 +84,11 @@ export default function VolunteersPage() {
               </tr>
             </thead>
             <tbody>
-              {volunteers.map((vol) => (
+              {volunteers.map((vol) => {
+                const isAssigned = vol.assignedTaskId || vol.assignedTask;
+                const taskName = vol.assignedTask?.title || (typeof vol.assignedTask === 'string' ? vol.assignedTask : null) || `Task #${vol.assignedTaskId}`;
+
+                return (
                 <tr key={vol.id}>
                   <td>
                     <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
@@ -72,7 +101,24 @@ export default function VolunteersPage() {
                   <td>
                     <span className="badge badge-medium" style={{background: 'rgba(255,255,255,0.05)', color: 'var(--text-primary)', border: '1px solid var(--border-glass)'}}>{vol.skill}</span>
                   </td>
-                  <td>{vol.location}</td>
+                  <td>
+                    {editingId === vol.id ? (
+                      <div style={{display: 'flex', flexDirection: 'column', gap: '8px', minWidth: '150px'}}>
+                        <input
+                          type="text"
+                          value={editAddress}
+                          onChange={(e) => setEditAddress(e.target.value)}
+                          style={{padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--border-glass)', background: 'rgba(0,0,0,0.2)', color: 'inherit', fontSize: '13px'}}
+                        />
+                        <div style={{display: 'flex', gap: '8px'}}>
+                          <button onClick={() => saveAddress(vol.id)} className="btn btn-primary" style={{padding: '4px 8px', fontSize: '12px'}}>Save</button>
+                          <button onClick={() => setEditingId(null)} className="btn btn-secondary" style={{padding: '4px 8px', fontSize: '12px'}}>Cancel</button>
+                        </div>
+                      </div>
+                    ) : (
+                      vol.location
+                    )}
+                  </td>
                   <td>
                     {vol.isAvailable ? (
                       <span className="badge badge-low">Available</span>
@@ -81,16 +127,25 @@ export default function VolunteersPage() {
                     )}
                   </td>
                   <td>
-                    <button 
-                      className="btn btn-secondary" 
-                      style={{padding: '6px 12px', fontSize: '13px', borderColor: 'var(--accent-red)', color: 'var(--accent-red)'}}
-                      onClick={() => deleteVolunteer(vol.id)}
-                    >
-                      Delete
-                    </button>
+                    <div style={{display: 'flex', gap: '8px'}}>
+                      <button 
+                        className="btn btn-secondary" 
+                        style={{padding: '6px 12px', fontSize: '13px'}}
+                        onClick={() => startEditing(vol)}
+                      >
+                        Edit Details
+                      </button>
+                      <button 
+                        className="btn btn-secondary" 
+                        style={{padding: '6px 12px', fontSize: '13px', borderColor: 'var(--accent-red)', color: 'var(--accent-red)'}}
+                        onClick={() => deleteVolunteer(vol.id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </td>
                 </tr>
-              ))}
+              )})}
             </tbody>
           </table>
         )}

@@ -9,7 +9,7 @@
       "urgency": "High",
       "affectedCount": 150,
       "priority": 95,
-      "status": "Assigned",
+      "status": "Completed",
       "createdAt": "2026-03-23T10:00:00Z"
     },
     {
@@ -21,7 +21,7 @@
       "urgency": "Medium",
       "affectedCount": 500,
       "priority": 75,
-      "status": "Assigned",
+      "status": "Completed",
       "createdAt": "2026-03-23T11:30:00Z"
     },
     {
@@ -33,38 +33,56 @@
       "urgency": "High",
       "affectedCount": 50,
       "priority": 62,
-      "status": "Pending",
+      "status": "Completed",
       "createdAt": "2026-03-24T07:25:10.271Z"
     }
   ],
   "volunteers": [
     {
-      "id": "v1",
-      "name": "Dr. Sarah Chen",
+      "id": "v_myobhwg",
+      "name": "aryan",
       "skill": "Medical",
-      "location": "Downtown",
-      "isAvailable": false
+      "location": "rajwada",
+      "isAvailable": true,
+      "createdAt": "2026-04-08T17:54:35.942Z",
+      "assignedTaskId": "t2",
+      "assignedTask": "Food Distribution"
     },
     {
-      "id": "v2",
-      "name": "Mark Johnson",
-      "skill": "Logistics",
-      "location": "Northside",
-      "isAvailable": true
-    },
-    {
-      "id": "v3",
-      "name": "Elena Rodriguez",
+      "id": "v_28olalx",
+      "name": "amaan ",
       "skill": "Food",
-      "location": "Downtown",
-      "isAvailable": false
+      "location": "Northside Community",
+      "isAvailable": true,
+      "createdAt": "2026-04-08T17:55:50.480Z",
+      "assignedTaskId": "t_14fa9gd",
+      "assignedTask": "food distribution camp"
     },
     {
-      "id": "v4",
-      "name": "Dr. James Smith",
-      "skill": "Medical",
-      "location": "West End",
-      "isAvailable": true
+      "id": "v_32jezhh",
+      "name": "aaradhaya",
+      "skill": "Logistics",
+      "location": "Downtown Shelter",
+      "isAvailable": true,
+      "createdAt": "2026-04-08T18:05:26.735Z",
+      "assignedTaskId": "t1",
+      "assignedTask": "Emergency Medical Camp"
+    },
+    {
+      "id": "v_ib46b1o",
+      "name": "garv",
+      "skill": "General",
+      "location": "indore ",
+      "isAvailable": true,
+      "createdAt": "2026-04-08T18:07:13.678Z"
+    },
+    {
+      "id": "v_kot3nos",
+      "name": "akshat",
+      "skill": "Education",
+      "location": "lane 3 ",
+      "isAvailable": true,
+      "createdAt": "2026-04-08T18:08:09.340Z"
     }
   ],
   "assignments": [
@@ -80,6 +98,69 @@
       "taskId": "t2",
       "volunteerId": "v_qlhm7to",
       "assignedAt": "2026-03-24T07:27:01.679Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_ygulc0s",
+      "taskId": "t_14fa9gd",
+      "volunteerId": "v_cn9v0lu",
+      "assignedAt": "2026-04-08T16:57:22.180Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_h92sxfm",
+      "taskId": "t2",
+      "volunteerId": "v2",
+      "assignedAt": "2026-04-08T16:57:26.916Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_hz1idy6",
+      "taskId": "t1",
+      "volunteerId": "v4",
+      "assignedAt": "2026-04-08T16:57:30.128Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_e180p7j",
+      "taskId": "t1",
+      "volunteerId": "v_nbozh70",
+      "assignedAt": "2026-04-08T17:35:54.240Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_x0at58u",
+      "taskId": "t_14fa9gd",
+      "volunteerId": "v_pg3xyzb",
+      "assignedAt": "2026-04-08T17:39:15.428Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_n2h1o86",
+      "taskId": "t1",
+      "volunteerId": "v_myobhwg",
+      "assignedAt": "2026-04-08T18:04:40.129Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_tx8138h",
+      "taskId": "t2",
+      "volunteerId": "v_myobhwg",
+      "assignedAt": "2026-04-08T18:05:43.066Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_3j9hldg",
+      "taskId": "t1",
+      "volunteerId": "v_32jezhh",
+      "assignedAt": "2026-04-08T18:05:56.729Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_thmq1e2",
+      "taskId": "t_14fa9gd",
+      "volunteerId": "v_28olalx",
+      "assignedAt": "2026-04-08T18:06:00.036Z",
       "status": "Active"
     }
   ]

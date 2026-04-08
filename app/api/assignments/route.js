@@ -32,6 +32,8 @@ export async function POST(request) {
     tasks[taskIndex].status = "Assigned";
     // Optionally make volunteer unavailable
     volunteers[volIndex].isAvailable = false;
+    volunteers[volIndex].assignedTaskId = taskId;
+    volunteers[volIndex].assignedTask = tasks[taskIndex].title;
     
     const newAssignment = {
       id: "a_" + generateId(),

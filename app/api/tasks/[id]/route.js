@@ -10,7 +10,20 @@ export async function PATCH(request, { params }) {
     
     if (index === -1) return NextResponse.json({ error: 'Task not found' }, { status: 404 });
     
-    if (body.status) tasks[index].status = body.status;
+    if (body.status) {
+      tasks[index].status = body.status;
+      if (body.status === 'Completed') {
+        const volunteers = await db.getVolunteers();
+        let volsUpdated = false;
+        for (let vol of volunteers) {
+          if (vol.assignedTaskId === id) {
+            vol.isAvailable = true;
+            volsUpdated = true;
+          }
+        }
+        if (volsUpdated) await db.saveVolunteers(volunteers);
+      }
+    }
     
     await db.saveTasks(tasks);
     return NextResponse.json(tasks[index]);

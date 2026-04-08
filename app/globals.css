@@ -126,3 +126,27 @@ body { background-color: var(--bg-primary); color: var(--text-primary); font-fam
 .border { border-width: 1px; border-style: solid; }
 .border-gray-200 { border-color: #e5e7eb; }
 .dark .dark\:border-gray-700 { border-color: #374151; }
+
+.primary-skill-select {
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+.dark .primary-skill-select {
+  background-color: var(--bg-secondary);
+  color: #ffffff;
+}
+
+/* User Requested Utility Classes */
+.cursor-pointer { cursor: pointer; }
+.transition { transition: all 0.3s ease; }
+.hover\:scale-105:hover { transform: scale(1.05); }
+
+.border-2 { border-width: 2px; border-style: solid; }
+.border-green-500 { border-color: var(--accent-green) !important; }
+.border-gray-200 { border-color: var(--border-glass) !important; }
+.text-red-500 { color: var(--accent-red) !important; }
+.text-gray-700 { color: var(--text-secondary) !important; }
+.font-semibold { font-weight: 600 !important; }
+.bg-green-50 { background-color: rgba(16, 185, 129, 0.1) !important; }
+.bg-red-50 { background-color: rgba(239, 68, 68, 0.1) !important; }

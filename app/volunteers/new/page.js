@@ -54,7 +54,8 @@ export default function NewVolunteerPage() {
           <select 
             value={formData.skill}
             onChange={e => setFormData({...formData, skill: e.target.value})}
-            style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-secondary)', color: '#fff', fontSize: '15px'}}
+            className="primary-skill-select"
+            style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', fontSize: '15px'}}
           >
             <option>Medical</option>
             <option>Food</option>
