@@ -5,9 +5,18 @@ import { calculatePriority, generateId } from '@/lib/utils';
 export async function GET() {
   try {
     const tasks = await db.getTasks();
+    
+    // Ensure all tasks have a priority (backward compatibility)
+    const processedTasks = tasks.map(task => ({
+      ...task,
+      priority: task.priority !== undefined && task.priority !== null 
+        ? task.priority 
+        : calculatePriority(task.category, Number(task.affectedCount || 0))
+    }));
+
     // Sort tasks by priority descending
-    tasks.sort((a, b) => b.priority - a.priority);
-    return NextResponse.json(tasks);
+    processedTasks.sort((a, b) => b.priority - a.priority);
+    return NextResponse.json(processedTasks);
   } catch (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
@@ -26,7 +35,7 @@ export async function POST(request) {
       category: data.category,
       urgency: data.urgency,
       affectedCount: Number(data.affectedCount || 0),
-      priority: calculatePriority(data.urgency, Number(data.affectedCount || 0)),
+      priority: calculatePriority(data.category, Number(data.affectedCount || 0)),
       status: data.status || "Pending",
       createdAt: new Date().toISOString()
     };

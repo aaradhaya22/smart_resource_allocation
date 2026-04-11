@@ -15,7 +15,14 @@ export async function GET() {
         Medium: tasks.filter(t => t.urgency === 'Medium').length,
         Low: tasks.filter(t => t.urgency === 'Low').length
       },
-      criticalTasks: tasks.filter(t => t.priority >= 80).length,
+      criticalTasks: tasks.filter(t => {
+        const priority = t.priority !== undefined && t.priority !== null 
+          ? t.priority 
+          : (t.category !== undefined ? (
+              { Medical: 50, Food: 40, Logistics: 30, Education: 20, General: 10 }[t.category] || 10
+            ) + Math.min(Number(t.affectedCount || 0), 100) : 0);
+        return priority >= 80;
+      }).length,
       // Aggregation for charts
       taskCategories: tasks.reduce((acc, t) => {
         acc[t.category] = (acc[t.category] || 0) + 1;

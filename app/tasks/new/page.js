@@ -11,7 +11,6 @@ export default function NewTaskPage() {
     description: '',
     location: '',
     category: 'Medical',
-    urgency: 'Medium',
     status: 'Pending',
     affectedCount: ''
   });
@@ -90,19 +89,7 @@ export default function NewTaskPage() {
             </select>
           </div>
 
-          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Urgency Level</label>
-            <select 
-              value={formData.urgency}
-              onChange={e => setFormData({...formData, urgency: e.target.value})}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '15px'}}
-            >
-              <option>Low</option>
-              <option>Medium</option>
-              <option>High</option>
-              <option>Critical</option>
-            </select>
-          </div>
+          {/* Urgency Level field removed */}
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
             <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Number of People Affected</label>
@@ -128,6 +115,10 @@ export default function NewTaskPage() {
               <option>Completed</option>
             </select>
           </div>
+        </div>
+
+        <div style={{fontSize: '13px', color: 'var(--text-secondary)', fontStyle: 'italic', marginTop: '8px'}}>
+          * Task priority is automatically calculated based on category and impact
         </div>
 
         <div style={{display: 'flex', justifyContent: 'flex-end', gap: '16px', marginTop: '16px'}}>

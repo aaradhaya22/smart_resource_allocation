@@ -43,16 +43,6 @@ export default function TasksPage() {
     }
   };
 
-  const getBadgeClass = (urgency) => {
-    switch (urgency) {
-      case 'Critical': return 'badge-critical';
-      case 'High': return 'badge-high';
-      case 'Medium': return 'badge-medium';
-      case 'Low': return 'badge-low';
-      default: return 'badge-low';
-    }
-  };
-
   const getStatusBadgeClass = (status) => {
     switch (status) {
       case 'Pending': return 'badge-pending';
@@ -60,6 +50,13 @@ export default function TasksPage() {
       case 'Completed': return 'badge-low';
       default: return 'badge-pending';
     }
+  };
+
+  const getPriorityLabel = (score) => {
+    if (score <= 70) return "Low";
+    if (score <= 140) return "Medium";
+    if (score <= 150) return "High";
+    return "Critical";
   };
 
   return (
@@ -85,7 +82,6 @@ export default function TasksPage() {
               <tr>
                 <th>Title & Location</th>
                 <th>Category</th>
-                <th>Urgency</th>
                 <th>Priority Score</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -100,14 +96,18 @@ export default function TasksPage() {
                   </td>
                   <td>{task.category}</td>
                   <td>
-                    <span className={`badge ${getBadgeClass(task.urgency)}`}>{task.urgency}</span>
-                  </td>
-                  <td>
-                    <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
-                      <div style={{width: '60px', height: '6px', background: 'rgba(255,255,255,0.1)', borderRadius: '3px', overflow: 'hidden'}}>
-                        <div style={{height: '100%', width: `${task.priority}%`, background: task.priority > 80 ? 'var(--accent-red)' : 'var(--accent-blue)'}}></div>
-                      </div>
-                      <span style={{fontSize: '13px', fontWeight: 'bold'}}>{task.priority}</span>
+                    <div>
+                      <span className={
+                        task.priority <= 70 ? "text-green-600" :
+                        task.priority <= 140 ? "text-yellow-600" :
+                        task.priority <= 150 ? "text-orange-600" :
+                        "text-red-600 font-semibold"
+                      }>
+                        {getPriorityLabel(task.priority)}
+                      </span>
+                      <span className="text-gray-500 ml-2">
+                        ({task.priority})
+                      </span>
                     </div>
                   </td>
                   <td>
