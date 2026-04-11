@@ -30,6 +30,13 @@ export async function GET(request, { params }) {
         reasons.push("Partial Skill Match (Logistics)");
       }
       
+      const secondarySkills = v.secondarySkills || [];
+      const hasSecondaryMatch = secondarySkills.some(s => s.toLowerCase() === task.category.toLowerCase());
+      if (hasSecondaryMatch) {
+        score += 15;
+        reasons.push("Secondary Skill Match");
+      }
+      
       // Location match
       // If high urgency, prioritize closest available
       const isUrgent = task.urgency === 'High' || task.urgency === 'Critical';

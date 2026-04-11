@@ -20,6 +20,7 @@ export async function POST(request) {
       id: "v_" + generateId(),
       name: data.name,
       skill: data.skill,
+      secondarySkills: data.secondarySkills || [],
       location: data.location,
       isAvailable: data.isAvailable ?? true,
       createdAt: new Date().toISOString()

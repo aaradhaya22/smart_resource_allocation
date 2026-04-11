@@ -4,15 +4,32 @@ import Link from 'next/link';
 
 export default function Dashboard() {
   const [stats, setStats] = useState(null);
+  const [tasks, setTasks] = useState([]);
+  const [volunteers, setVolunteers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
-    fetch('/api/dashboard')
-      .then(res => res.json())
-      .then(data => {
-        setStats(data);
-        setLoading(false);
-      });
+    // Observe theme changes for conditional styling
+    setIsDark(document.documentElement.classList.contains('dark'));
+    const observer = new MutationObserver(() => {
+      setIsDark(document.documentElement.classList.contains('dark'));
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    Promise.all([
+      fetch('/api/dashboard').then(res => res.json()),
+      fetch('/api/tasks').then(res => res.json()),
+      fetch('/api/volunteers').then(res => res.json())
+    ]).then(([dashboardData, taskData, volunteerData]) => {
+      setStats(dashboardData);
+      setTasks(taskData);
+      setVolunteers(volunteerData);
+      setLoading(false);
+    });
   }, []);
 
   if (loading) return (
@@ -60,21 +77,41 @@ export default function Dashboard() {
       </div>
 
       <div className="stats-grid animate-fade-in delay-2" style={{gridTemplateColumns: '1fr 1fr'}}>
-        <div className="glass-panel">
-          <h3 style={{marginBottom: '24px', fontSize: '18px'}}>Task Urgency Distribution</h3>
-          <div className="chart-container">
-            <div className="bar-wrapper">
-              <div className="bar" style={{height: `${(stats.tasksByUrgency.Critical || 0 + stats.tasksByUrgency.High || 0) / totalTasks * 100}%`, background: 'var(--accent-red)', boxShadow: '0 0 16px rgba(239, 68, 68, 0.4)'}}></div>
-              <span className="bar-label">High/Critical</span>
-            </div>
-            <div className="bar-wrapper">
-              <div className="bar" style={{height: `${(stats.tasksByUrgency.Medium || 0) / totalTasks * 100}%`, background: 'var(--accent-orange)'}}></div>
-              <span className="bar-label">Medium</span>
-            </div>
-            <div className="bar-wrapper">
-              <div className="bar" style={{height: `${(stats.tasksByUrgency.Low || 0) / totalTasks * 100}%`, background: 'var(--accent-green)'}}></div>
-              <span className="bar-label">Low</span>
-            </div>
+        <div className="glass-panel" style={{maxHeight: '400px', overflowY: 'auto'}}>
+          <h3 style={{marginBottom: '24px', fontSize: '18px'}}>Active Tasks Overview</h3>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '16px'}}>
+            {tasks.map(task => {
+              const assignedVols = volunteers.filter(v => v.assignedTaskId === task.id);
+              return (
+                <div key={task.id} style={{padding: '12px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)'}}>
+                  <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px'}}>
+                    <div style={{fontWeight: '600'}}>{task.title}</div>
+                    <div className={`badge ${task.status === 'Completed' ? 'badge-low' : task.status === 'In Progress' ? 'badge-medium' : 'badge-pending'}`} style={{fontSize: '11px'}}>
+                      {task.status}
+                    </div>
+                  </div>
+                  <div style={{fontSize: '13px', color: 'var(--text-secondary)'}}>
+                    <div style={{marginBottom: '4px'}}>
+                      <strong>Assigned Volunteers:</strong> {assignedVols.length}
+                    </div>
+                    {assignedVols.length > 0 ? (
+                      <div style={{display: 'flex', flexWrap: 'wrap', gap: '4px'}}>
+                        {assignedVols.map(v => (
+                          <span key={v.id} style={{background: 'rgba(56, 189, 248, 0.1)', color: 'var(--accent-blue)', padding: '2px 8px', borderRadius: '12px', fontSize: '11px'}}>
+                            {v.name}
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <div style={{fontStyle: 'italic', color: isDark ? 'rgba(255,255,255,0.3)' : '#1f2937'}}>No volunteers assigned</div>
+                    )}
+                  </div>
+                </div>
+              );
+            })}
+            {tasks.length === 0 && (
+              <div style={{color: 'var(--text-secondary)', fontStyle: 'italic', textAlign: 'center', padding: '20px'}}>No tasks available</div>
+            )}
           </div>
         </div>
 

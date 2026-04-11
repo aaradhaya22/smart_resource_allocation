@@ -6,9 +6,11 @@ import Link from 'next/link';
 export default function NewVolunteerPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [showSecondaryDropdown, setShowSecondaryDropdown] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     skill: 'Medical',
+    secondarySkills: [],
     location: '',
     isAvailable: true
   });
@@ -64,6 +66,40 @@ export default function NewVolunteerPage() {
             <option>Shelter</option>
             <option>General</option>
           </select>
+        </div>
+
+        <div style={{display: 'flex', flexDirection: 'column', gap: '8px', position: 'relative'}}>
+          <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Secondary Skills</label>
+          <div 
+            onClick={() => setShowSecondaryDropdown(!showSecondaryDropdown)}
+            style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'rgba(0,0,0,0.2)', color: '#fff', fontSize: '15px', cursor: 'pointer', display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
+          >
+            <span style={{opacity: formData.secondarySkills.length > 0 ? 1 : 0.5}}>
+              {formData.secondarySkills.length > 0 ? formData.secondarySkills.join(", ") : "Select skills..."}
+            </span>
+            <span style={{transform: showSecondaryDropdown ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s', fontSize: '12px'}}>▼</span>
+          </div>
+          {showSecondaryDropdown && (
+            <div style={{position: 'absolute', top: '100%', left: 0, right: 0, marginTop: '8px', background: 'var(--bg-secondary)', border: '1px solid var(--border-glass)', borderRadius: '8px', padding: '8px', zIndex: 10, display: 'flex', flexDirection: 'column', gap: '4px', boxShadow: '0 4px 20px rgba(0,0,0,0.5)'}}>
+              {['Medical', 'Food', 'Logistics', 'Education', 'Shelter', 'General'].map(skill => (
+                <label key={skill} style={{display: 'flex', alignItems: 'center', gap: '10px', padding: '8px 12px', cursor: 'pointer', borderRadius: '6px', background: 'rgba(255,255,255,0.02)'}}>
+                  <input 
+                    type="checkbox" 
+                    checked={formData.secondarySkills.includes(skill)}
+                    onChange={(e) => {
+                      if (e.target.checked) {
+                        setFormData(prev => ({...prev, secondarySkills: [...prev.secondarySkills, skill]}));
+                      } else {
+                        setFormData(prev => ({...prev, secondarySkills: prev.secondarySkills.filter(s => s !== skill)}));
+                      }
+                    }}
+                    style={{width: '16px', height: '16px', accentColor: 'var(--accent-blue)', cursor: 'pointer'}}
+                  />
+                  <span style={{fontSize: '14px'}}>{skill}</span>
+                </label>
+              ))}
+            </div>
+          )}
         </div>
 
         <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>

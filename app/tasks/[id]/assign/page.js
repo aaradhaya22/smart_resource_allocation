@@ -12,6 +12,8 @@ export default function AssignTaskPage({ params }) {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [assigning, setAssigning] = useState(null);
+  const [selectedVols, setSelectedVols] = useState([]);
+  const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
     // Fetch Task
@@ -39,6 +41,30 @@ export default function AssignTaskPage({ params }) {
       body: JSON.stringify({ taskId: id, volunteerId })
     });
     router.push('/tasks');
+  };
+
+  const handleAssignSelected = async () => {
+    if (selectedVols.length === 0) {
+      setErrorMsg("Please select at least one volunteer.");
+      return;
+    }
+    setAssigning("multi");
+    setErrorMsg("");
+    await fetch('/api/assignments', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ taskId: id, volunteerIds: selectedVols })
+    });
+    router.push('/tasks');
+  };
+
+  const toggleSelection = (volId) => {
+    setErrorMsg("");
+    if (selectedVols.includes(volId)) {
+      setSelectedVols(selectedVols.filter(id => id !== volId));
+    } else {
+      setSelectedVols([...selectedVols, volId]);
+    }
   };
 
   if (loading) return (
@@ -69,9 +95,27 @@ export default function AssignTaskPage({ params }) {
         </div>
       </div>
 
-      <h3 style={{marginBottom: '16px', fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px'}}>
-        <span>✨</span> AI Recommended Matches
-      </h3>
+      <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px'}}>
+        <h3 style={{fontSize: '18px', display: 'flex', alignItems: 'center', gap: '8px', margin: 0}}>
+          <span>✨</span> AI Recommended Matches
+        </h3>
+        {matches.length > 0 && (
+          <button 
+            onClick={handleAssignSelected} 
+            disabled={assigning !== null}
+            className="btn btn-primary"
+            style={{padding: '8px 16px', fontSize: '14px'}}
+          >
+            {assigning === "multi" ? 'Deploying Selected...' : 'Assign Selected'}
+          </button>
+        )}
+      </div>
+      
+      {errorMsg && (
+        <div style={{color: 'var(--accent-red)', marginBottom: '16px', padding: '12px', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '8px', border: '1px solid rgba(239, 68, 68, 0.2)'}}>
+          {errorMsg}
+        </div>
+      )}
       
       {matches.length === 0 ? (
         <div className="glass-panel" style={{textAlign: 'center', padding: '40px', color: 'var(--text-secondary)'}}>
@@ -83,6 +127,12 @@ export default function AssignTaskPage({ params }) {
             <div key={vol.id} className={`glass-panel animate-fade-in delay-${(idx % 3) + 1}`} style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
               
               <div style={{display: 'flex', gap: '24px', alignItems: 'center'}}>
+                <input 
+                  type="checkbox" 
+                  checked={selectedVols.includes(vol.id)} 
+                  onChange={() => toggleSelection(vol.id)}
+                  style={{width: '20px', height: '20px', cursor: 'pointer', accentColor: 'var(--accent-blue)'}}
+                />
                 {/* Score Circular Badge */}
                 <div style={{
                   width: '64px', height: '64px', borderRadius: '50%', 

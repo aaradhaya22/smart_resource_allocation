@@ -100,6 +100,13 @@ export default function VolunteersPage() {
                   </td>
                   <td>
                     <span className="badge badge-medium" style={{background: 'rgba(255,255,255,0.05)', color: 'var(--text-primary)', border: '1px solid var(--border-glass)'}}>{vol.skill}</span>
+                    <p style={{fontSize: '12px', marginTop: '6px', color: 'var(--text-secondary)', margin: 0, paddingTop: '6px'}}>
+                      Secondary Skills: {
+                        vol.secondarySkills && vol.secondarySkills.length > 0
+                          ? vol.secondarySkills.join(", ")
+                          : "None"
+                      }
+                    </p>
                   </td>
                   <td>
                     {editingId === vol.id ? (
