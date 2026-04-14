@@ -1,7 +1,69 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+
+const apiCache = {
+  countries: null,
+  states: {},
+  cities: {}
+};
+
+async function fetchCountries() {
+  if (apiCache.countries) return apiCache.countries;
+  try {
+    const res = await fetch('https://countriesnow.space/api/v0.1/countries');
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const sorted = data.data.map(c => c.country).sort((a, b) => a.localeCompare(b));
+    apiCache.countries = sorted;
+    return sorted;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+async function fetchStates(country) {
+  if (!country) return [];
+  if (apiCache.states[country]) return apiCache.states[country];
+  try {
+    const res = await fetch('https://countriesnow.space/api/v0.1/countries/states', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ country })
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const states = data?.data?.states?.map(s => s.name) || [];
+    apiCache.states[country] = states;
+    return states;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
+
+async function fetchCities(country, state) {
+  if (!country || !state) return [];
+  const key = `${country}-${state}`;
+  if (apiCache.cities[key]) return apiCache.cities[key];
+  try {
+    const res = await fetch('https://countriesnow.space/api/v0.1/countries/state/cities', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ country, state })
+    });
+    if (!res.ok) throw new Error();
+    const data = await res.json();
+    const cities = data?.data || [];
+    apiCache.cities[key] = cities;
+    return cities;
+  } catch (e) {
+    console.error(e);
+    return [];
+  }
+}
 
 export default function NewTaskPage() {
   const router = useRouter();
@@ -9,20 +71,72 @@ export default function NewTaskPage() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
-    location: '',
     category: 'Medical',
     status: 'Pending',
     affectedCount: ''
   });
 
+  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedState, setSelectedState] = useState('');
+  const [selectedCity, setSelectedCity] = useState('');
+  
+  const [countriesList, setCountriesList] = useState([]);
+  const [statesList, setStatesList] = useState([]);
+  const [citiesList, setCitiesList] = useState([]);
+  
+  const [loadingLocation, setLoadingLocation] = useState(true);
+  const [locationError, setLocationError] = useState(false);
+
+  useEffect(() => {
+    setLoadingLocation(true);
+    setLocationError(false);
+    fetchCountries().then(c => {
+      setCountriesList(c);
+      if (c.length === 0) setLocationError(true);
+      setLoadingLocation(false);
+    });
+  }, []);
+
+  useEffect(() => {
+    setSelectedState('');
+    setSelectedCity('');
+    setStatesList([]);
+    setCitiesList([]);
+    if (selectedCountry) {
+      setLoadingLocation(true);
+      setLocationError(false);
+      fetchStates(selectedCountry).then(s => {
+        setStatesList(s);
+        if (s.length === 0) setLocationError(true);
+        setLoadingLocation(false);
+      });
+    }
+  }, [selectedCountry]);
+
+  useEffect(() => {
+    setSelectedCity('');
+    setCitiesList([]);
+    if (selectedCountry && selectedState) {
+      setLoadingLocation(true);
+      setLocationError(false);
+      fetchCities(selectedCountry, selectedState).then(c => {
+        setCitiesList(c);
+        if (c.length === 0) setLocationError(true);
+        setLoadingLocation(false);
+      });
+    }
+  }, [selectedState, selectedCountry]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     
+    const fullLocation = `${selectedCity}, ${selectedState}, ${selectedCountry}`;
+    
     await fetch('/api/tasks', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({ ...formData, location: fullLocation })
     });
     
     router.push('/tasks');
@@ -64,14 +178,50 @@ export default function NewTaskPage() {
 
         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px'}}>
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Location</label>
-            <input 
-              type="text" 
-              required 
-              value={formData.location}
-              onChange={e => setFormData({...formData, location: e.target.value})}
+            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>
+              Country {loadingLocation && <span style={{fontSize:'12px', color:'var(--accent-blue)'}}>(Loading...)</span>}
+              {locationError && <span style={{fontSize:'12px', color:'var(--accent-red)'}}>(Failed to load data)</span>}
+            </label>
+            <select 
+              value={selectedCountry}
+              onChange={e => setSelectedCountry(e.target.value)}
               style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
-            />
+            >
+              <option value="">Select Country</option>
+              {countriesList.map(country => (
+                <option key={country} value={country}>{country}</option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>State</label>
+            <select 
+              value={selectedState}
+              onChange={e => setSelectedState(e.target.value)}
+              disabled={!selectedCountry}
+              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+            >
+              <option value="">Select State</option>
+              {statesList.map(state => (
+                <option key={state} value={state}>{state}</option>
+              ))}
+            </select>
+          </div>
+
+          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
+            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>City</label>
+            <select 
+              value={selectedCity}
+              onChange={e => setSelectedCity(e.target.value)}
+              disabled={!selectedState}
+              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+            >
+              <option value="">Select City</option>
+              {citiesList.map(city => (
+                <option key={city} value={city}>{city}</option>
+              ))}
+            </select>
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
@@ -103,7 +253,7 @@ export default function NewTaskPage() {
             />
           </div>
 
-          <div style={{display: 'flex', flexDirection: 'column', gap: '8px', gridColumn: '1 / -1'}}>
+          <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
             <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Status</label>
             <select 
               value={formData.status}

@@ -10,6 +10,17 @@
       "priority": 150,
       "status": "Pending",
       "createdAt": "2026-04-11T16:27:23.206Z"
+    },
+    {
+      "id": "t_u11uw6w",
+      "title": "Education Camp",
+      "description": "h;xh?ISAX\n",
+      "location": "Indore, Madhya Pradesh, India",
+      "category": "Education",
+      "affectedCount": 500,
+      "priority": 120,
+      "status": "Pending",
+      "createdAt": "2026-04-12T18:14:38.119Z"
     }
   ],
   "volunteers": [
@@ -64,6 +75,17 @@
       "createdAt": "2026-04-10T16:24:52.397Z",
       "assignedTaskId": "t2",
       "assignedTask": "Food Distribution"
+    },
+    {
+      "id": "v_i2xionn",
+      "name": "Aarya",
+      "skill": "Education",
+      "secondarySkills": [
+        "General"
+      ],
+      "location": "Indore, Madhya Pradesh, India",
+      "isAvailable": true,
+      "createdAt": "2026-04-12T18:17:01.099Z"
     }
   ],
   "assignments": [
