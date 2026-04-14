@@ -1,36 +1,192 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 NexusNGO – Smart Resource Allocation System
 
-## Getting Started
+A smart, data-driven platform designed to help NGOs efficiently manage volunteers and tasks, ensuring optimal resource allocation and faster response to critical needs.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## 📌 Problem Statement
+
+Local NGOs and social organizations often struggle with:
+- Poor coordination between volunteers and tasks
+- Manual and inconsistent prioritization
+- Scattered and unstructured data
+
+This leads to inefficient use of resources and delayed response to critical situations.
+
+---
+
+## 💡 Solution
+
+NexusNGO solves this problem by providing:
+- Automated task prioritization
+- Skill-based volunteer allocation
+- Real-time task and resource tracking
+
+---
+
+## 🧠 Key Features
+
+### 🔹 Smart Task Prioritization
+- Automatically calculates priority based on:
+  - Task category
+  - Number of people affected
+- Eliminates manual urgency input
+
+---
+
+### 🔹 Volunteer Management
+- Add, edit, and remove volunteers
+- Supports:
+  - Primary skill
+  - Secondary skills (multi-select)
+- Tracks availability dynamically
+
+---
+
+### 🔹 Task Management
+- Create and manage tasks
+- Track:
+  - Status (Pending / In Progress / Completed)
+  - Priority score & label
+
+---
+
+### 🔹 Smart Matching System
+- Matches volunteers based on:
+  - Primary skills (higher weight)
+  - Secondary skills (lower weight)
+- Allows assigning multiple volunteers to a task
+
+---
+
+### 🔹 Real-Time Updates
+- When a task is completed:
+  - Assigned volunteers automatically become available again
+
+---
+
+### 🔹 Dashboard Overview
+- Displays:
+  - Active tasks
+  - Volunteer availability
+  - System insights for decision-making
+
+---
+
+## 🧮 Priority Calculation Logic
+
+Priority is computed using:
+
+```
+Priority = Category Weight + Affected People Score
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Classification:
+- 0 – 70 → Low  
+- 71 – 140 → Medium  
+- 141 – 150 → High  
+- 150+ → Critical  
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🖼️ Screenshots
 
-## Learn More
+### 📊 Dashboard
+![Dashboard](./screenshots/dashboard.png)
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 👥 Volunteer Management
+![Volunteers](./screenshots/volunteers.png)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+### 📋 Task Management
+![Tasks](./screenshots/Task.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🤖 Smart Matching
+![Matching](./screenshots/matching.png)
+
+---
+
+### ➕ Add Task
+![Add Task](./screenshots/add-task.png)
+
+---
+
+### ➕ Add Volunteer
+![Add Volunteer](./screenshots/add-volunteer.png)
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+- React / Next.js
+- Tailwind CSS
+
+### Backend
+- Next.js API Routes
+
+### Database
+- JSON-based local database (for prototyping)
+
+---
+
+## ⚙️ Installation & Setup
+
+```bash
+# Clone the repository
+git clone https://github.com/aaradhaya22/smart_resource_allocation.git
+
+# Navigate to project folder
+cd smart_resource_allocation
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+```
+
+---
+
+## 📁 Project Structure
+
+```
+/app
+/components
+/lib
+/api
+/db.json
+```
+
+---
+
+## 🚀 Future Improvements
+
+- Database integration (SQLite / MongoDB)
+- Machine Learning-based prioritization
+- Notification system
+- Advanced analytics dashboard
+
+---
+
+## 🤝 Contribution
+
+Feel free to fork this repository and contribute!
+
+---
+
+## 📬 Contact
+
+**Aaradhaya Dattole**  
+GitHub: https://github.com/aaradhaya22  
+
+---
+
+## ⭐ Acknowledgement
+
+This project was built as part of a hackathon to create impactful solutions for real-world problems.
