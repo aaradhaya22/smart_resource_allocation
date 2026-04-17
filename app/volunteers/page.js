@@ -67,20 +67,20 @@ export default function VolunteersPage() {
         </Link>
       </header>
 
-      <div className="glass-panel animate-fade-in delay-1" style={{padding: '0', overflow: 'hidden'}}>
+      <div className="animate-fade-in delay-1" style={{padding: '0', overflow: 'hidden', background: 'transparent'}}>
         {loading ? (
           <div style={{padding: '40px', textAlign: 'center', color: 'var(--text-secondary)'}}>Loading personnel...</div>
         ) : volunteers.length === 0 ? (
           <div style={{padding: '40px', textAlign: 'center', color: 'var(--text-secondary)'}}>No volunteers registered yet.</div>
         ) : (
-          <table className="data-table">
+          <table className="w-full">
             <thead>
               <tr>
-                <th>Profile</th>
-                <th>Primary Skill</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th className="align-middle">Profile</th>
+                <th className="align-middle">Primary Skill</th>
+                <th className="align-middle">Location</th>
+                <th className="align-middle">Status</th>
+                <th className="align-middle">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -89,8 +89,8 @@ export default function VolunteersPage() {
                 const taskName = vol.assignedTask?.title || (typeof vol.assignedTask === 'string' ? vol.assignedTask : null) || `Task #${vol.assignedTaskId}`;
 
                 return (
-                <tr key={vol.id}>
-                  <td>
+                <tr key={vol.id} className="shadow-sm">
+                  <td className="align-middle">
                     <div style={{display: 'flex', alignItems: 'center', gap: '12px'}}>
                       <div style={{width: '32px', height: '32px', borderRadius: '50%', background: 'linear-gradient(135deg, #10b981, #3b82f6)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 'bold', fontSize: '14px', color: '#fff'}}>
                         {vol.name.charAt(0)}
@@ -98,7 +98,7 @@ export default function VolunteersPage() {
                       <div style={{fontWeight: '600'}}>{vol.name}</div>
                     </div>
                   </td>
-                  <td>
+                  <td className="align-middle">
                     <span className="badge badge-medium" style={{background: 'rgba(255,255,255,0.05)', color: 'var(--text-primary)', border: '1px solid var(--border-glass)'}}>{vol.skill}</span>
                     <p style={{fontSize: '12px', marginTop: '6px', color: 'var(--text-secondary)', margin: 0, paddingTop: '6px'}}>
                       Secondary Skills: {
@@ -108,14 +108,14 @@ export default function VolunteersPage() {
                       }
                     </p>
                   </td>
-                  <td>
+                  <td className="align-middle">
                     {editingId === vol.id ? (
                       <div style={{display: 'flex', flexDirection: 'column', gap: '8px', minWidth: '150px'}}>
                         <input
                           type="text"
                           value={editAddress}
                           onChange={(e) => setEditAddress(e.target.value)}
-                          style={{padding: '6px 8px', borderRadius: '4px', border: '1px solid var(--border-glass)', background: 'rgba(0,0,0,0.2)', color: 'inherit', fontSize: '13px'}}
+                          className="px-2 py-1 rounded w-full bg-gray-100 dark:bg-[#1f2937] text-black dark:text-white border-none outline-none focus:outline-none text-sm"
                         />
                         <div style={{display: 'flex', gap: '8px'}}>
                           <button onClick={() => saveAddress(vol.id)} className="btn btn-primary" style={{padding: '4px 8px', fontSize: '12px'}}>Save</button>
@@ -126,15 +126,15 @@ export default function VolunteersPage() {
                       vol.location
                     )}
                   </td>
-                  <td>
+                  <td className="align-middle">
                     {vol.isAvailable ? (
                       <span className="badge badge-low">Available</span>
                     ) : (
                       <span className="badge badge-critical">Deployed / Unavailable</span>
                     )}
                   </td>
-                  <td>
-                    <div style={{display: 'flex', gap: '8px'}}>
+                  <td className="align-middle">
+                    <div className="flex gap-3 items-center">
                       <button 
                         className="btn btn-secondary" 
                         style={{padding: '6px 12px', fontSize: '13px'}}

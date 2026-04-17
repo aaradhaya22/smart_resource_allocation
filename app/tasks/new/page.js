@@ -151,43 +151,43 @@ export default function NewTaskPage() {
         </div>
       </header>
 
-      <form className="glass-panel" onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
+      <form className="glass-panel bg-white dark:bg-gray-900" onSubmit={handleSubmit} style={{display: 'flex', flexDirection: 'column', gap: '24px'}}>
         
         <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-          <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Task Title</label>
+          <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">Task Title</label>
           <input 
             type="text" 
             required 
             value={formData.title}
             onChange={e => setFormData({...formData, title: e.target.value})}
-            style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+            className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition"
             placeholder="e.g. Emergency Medical Camp"
           />
         </div>
 
         <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-          <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Description</label>
+          <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">Description</label>
           <textarea 
             required 
             rows="3"
             value={formData.description}
             onChange={e => setFormData({...formData, description: e.target.value})}
-            style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px', fontFamily: 'inherit'}}
+            className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition font-inherit"
           ></textarea>
         </div>
 
         <div style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px'}}>
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">
               Country {loadingLocation && <span style={{fontSize:'12px', color:'var(--accent-blue)'}}>(Loading...)</span>}
               {locationError && <span style={{fontSize:'12px', color:'var(--accent-red)'}}>(Failed to load data)</span>}
             </label>
             <select 
               value={selectedCountry}
               onChange={e => setSelectedCountry(e.target.value)}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition"
             >
-              <option value="">Select Country</option>
+              <option value="" disabled className="text-gray-400">Select Country</option>
               {countriesList.map(country => (
                 <option key={country} value={country}>{country}</option>
               ))}
@@ -195,14 +195,14 @@ export default function NewTaskPage() {
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>State</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">State</label>
             <select 
               value={selectedState}
               onChange={e => setSelectedState(e.target.value)}
               disabled={!selectedCountry}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition disabled:opacity-50"
             >
-              <option value="">Select State</option>
+              <option value="" disabled className="text-gray-400">Select State</option>
               {statesList.map(state => (
                 <option key={state} value={state}>{state}</option>
               ))}
@@ -210,14 +210,14 @@ export default function NewTaskPage() {
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>City</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">City</label>
             <select 
               value={selectedCity}
               onChange={e => setSelectedCity(e.target.value)}
               disabled={!selectedState}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition disabled:opacity-50"
             >
-              <option value="">Select City</option>
+              <option value="" disabled className="text-gray-400">Select City</option>
               {citiesList.map(city => (
                 <option key={city} value={city}>{city}</option>
               ))}
@@ -225,11 +225,11 @@ export default function NewTaskPage() {
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Category</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">Category</label>
             <select 
               value={formData.category}
               onChange={e => setFormData({...formData, category: e.target.value})}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition"
             >
               <option>Medical</option>
               <option>Food</option>
@@ -242,23 +242,23 @@ export default function NewTaskPage() {
           {/* Urgency Level field removed */}
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Number of People Affected</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">Number of People Affected</label>
             <input 
               type="number" 
               required 
               min="0"
               value={formData.affectedCount}
               onChange={e => setFormData({...formData, affectedCount: e.target.value})}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-glass)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition"
             />
           </div>
 
           <div style={{display: 'flex', flexDirection: 'column', gap: '8px'}}>
-            <label style={{fontWeight: '500', fontSize: '14px', color: 'var(--text-secondary)'}}>Status</label>
+            <label className="text-gray-700 dark:text-gray-300 text-sm mb-1 font-medium">Status</label>
             <select 
               value={formData.status}
               onChange={e => setFormData({...formData, status: e.target.value})}
-              style={{padding: '12px 16px', borderRadius: '8px', border: '1px solid var(--border-glass)', background: 'var(--bg-secondary)', color: 'var(--text-primary)', fontSize: '15px'}}
+              className="w-full px-3 py-2 rounded-lg bg-gray-100 text-gray-900 dark:bg-gray-800 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none border-none transition"
             >
               <option>Pending</option>
               <option>In Progress</option>

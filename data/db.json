@@ -1,6 +1,7 @@
 {
   "tasks": [
     {
+      HEAD
       "id": "t_muzbuhl",
       "title": "Emergency Medical Camp",
       "description": "jcpuhfvkdnv;uigzcnjj;",
@@ -12,6 +13,8 @@
       "createdAt": "2026-04-11T16:27:23.206Z"
     },
     {
+
+      22b21df (UI improvements, dark mode fixes, dynamic location system, and smart matching enhancements)
       "id": "t_u11uw6w",
       "title": "Education Camp",
       "description": "h;xh?ISAX\n",
@@ -21,10 +24,33 @@
       "priority": 120,
       "status": "Pending",
       "createdAt": "2026-04-12T18:14:38.119Z"
+    },
+    {
+      "id": "t_epqj1zo",
+      "title": "shelter camp",
+      "description": "nciulgc;oi",
+      "location": "Ankleshwar, Gujarat, India",
+      "category": "Shelter",
+      "affectedCount": 500,
+      "priority": 110,
+      "status": "Pending",
+      "createdAt": "2026-04-14T15:21:39.448Z"
+    },
+    {
+      "id": "t_sexhyet",
+      "title": "emargency medical camp",
+      "description": "hcl>bZ",
+      "location": "Indore, Madhya Pradesh, India",
+      "category": "Medical",
+      "affectedCount": 10,
+      "priority": 60,
+      "status": "Pending",
+      "createdAt": "2026-04-14T15:39:17.185Z"
     }
   ],
   "volunteers": [
     {
+      HEAD
       "id": "v_myobhwg",
       "name": "aryan",
       "skill": "Medical",
@@ -35,6 +61,7 @@
       "assignedTask": "Emergency Medical Camp"
     },
     {
+      22b21df (UI improvements, dark mode fixes, dynamic location system, and smart matching enhancements)
       "id": "v_28olalx",
       "name": "amaan ",
       "skill": "Food",
@@ -63,6 +90,7 @@
       "createdAt": "2026-04-08T18:07:13.678Z"
     },
     {
+      HEAD
       "id": "v_qepvrlc",
       "name": "Aditya",
       "skill": "Medical",
@@ -77,6 +105,7 @@
       "assignedTask": "Emergency Medical Camp"
     },
     {
+      22b21df (UI improvements, dark mode fixes, dynamic location system, and smart matching enhancements)
       "id": "v_i2xionn",
       "name": "Aarya",
       "skill": "Education",
@@ -85,7 +114,9 @@
       ],
       "location": "Indore, Madhya Pradesh, India",
       "isAvailable": true,
-      "createdAt": "2026-04-12T18:17:01.099Z"
+      "createdAt": "2026-04-12T18:17:01.099Z",
+      "assignedTaskId": "t_u11uw6w",
+      "assignedTask": "Education Camp"
     }
   ],
   "assignments": [
@@ -188,6 +219,7 @@
       "status": "Active"
     },
     {
+      HEAD
       "id": "a_dzucae2",
       "taskId": "t_muzbuhl",
       "volunteerId": "v_myobhwg",
@@ -220,6 +252,54 @@
       "taskId": "t_muzbuhl",
       "volunteerId": "v_qepvrlc",
       "assignedAt": "2026-04-14T15:31:15.958Z",
+
+      "id": "a_hs4ojst",
+      "taskId": "t_muzbuhl",
+      "volunteerId": "v_myobhwg",
+      "assignedAt": "2026-04-14T15:30:32.159Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_uczixoi",
+      "taskId": "t_muzbuhl",
+      "volunteerId": "v_qepvrlc",
+      "assignedAt": "2026-04-14T15:30:32.159Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_l3n0fox",
+      "taskId": "t_muzbuhl",
+      "volunteerId": "v_32jezhh",
+      "assignedAt": "2026-04-14T15:30:32.159Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_xp9to1w",
+      "taskId": "t_khfd1v3",
+      "volunteerId": "v_qepvrlc",
+      "assignedAt": "2026-04-14T16:19:30.341Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_vguti97",
+      "taskId": "t_khfd1v3",
+      "volunteerId": "v_myobhwg",
+      "assignedAt": "2026-04-14T16:19:30.341Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_t9b75lc",
+      "taskId": "t_u11uw6w",
+      "volunteerId": "v_i2xionn",
+      "assignedAt": "2026-04-14T16:25:58.945Z",
+      "status": "Active"
+    },
+    {
+      "id": "a_c6erndp",
+      "taskId": "t_u11uw6w",
+      "volunteerId": "v_i2xionn",
+      "assignedAt": "2026-04-14T16:26:48.982Z",
+      22b21df (UI improvements, dark mode fixes, dynamic location system, and smart matching enhancements)
       "status": "Active"
     }
   ]

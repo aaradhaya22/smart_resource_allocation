@@ -71,31 +71,31 @@ export default function TasksPage() {
         </Link>
       </header>
 
-      <div className="glass-panel animate-fade-in delay-1" style={{padding: '0', overflow: 'hidden'}}>
+      <div className="animate-fade-in delay-1" style={{padding: '0', overflow: 'hidden', background: 'transparent'}}>
         {loading ? (
           <div style={{padding: '40px', textAlign: 'center', color: 'var(--text-secondary)'}}>Loading tasks...</div>
         ) : tasks.length === 0 ? (
           <div style={{padding: '40px', textAlign: 'center', color: 'var(--text-secondary)'}}>No tasks available. Create one to get started.</div>
         ) : (
-          <table className="data-table">
+          <table className="w-full">
             <thead>
               <tr>
-                <th>Title & Location</th>
-                <th>Category</th>
-                <th>Priority Score</th>
-                <th>Status</th>
-                <th>Actions</th>
+                <th className="align-middle">Title & Location</th>
+                <th className="align-middle">Category</th>
+                <th className="align-middle">Priority Score</th>
+                <th className="align-middle">Status</th>
+                <th className="align-middle">Actions</th>
               </tr>
             </thead>
             <tbody>
               {tasks.map((task) => (
-                <tr key={task.id}>
-                  <td>
+                <tr key={task.id} className="shadow-sm">
+                  <td className="align-middle">
                     <div style={{fontWeight: '600', marginBottom: '4px'}}>{task.title}</div>
                     <div style={{fontSize: '12px', color: 'var(--text-secondary)'}}>{task.location} • {task.affectedCount} affected</div>
                   </td>
-                  <td>{task.category}</td>
-                  <td>
+                  <td className="align-middle">{task.category}</td>
+                  <td className="align-middle">
                     <div>
                       <span className={
                         task.priority <= 70 ? "text-green-600" :
@@ -110,20 +110,20 @@ export default function TasksPage() {
                       </span>
                     </div>
                   </td>
-                  <td>
+                  <td className="align-middle">
                     <select
                       value={task.status}
                       onChange={(e) => updateStatus(task.id, e.target.value)}
-                      className={`badge ${getStatusBadgeClass(task.status)}`}
-                      style={{ border: 'none', cursor: 'pointer', outline: 'none' }}
+                      className={`badge ${getStatusBadgeClass(task.status)} bg-gray-100 dark:bg-[#1f2937] text-black dark:text-white border-none outline-none focus:outline-none`}
+                      style={{ cursor: 'pointer', outline: 'none' }}
                     >
-                      <option value="Pending" style={{color: '#000'}}>Pending</option>
-                      <option value="In Progress" style={{color: '#000'}}>In Progress</option>
-                      <option value="Completed" style={{color: '#000'}}>Completed</option>
+                      <option value="Pending">Pending</option>
+                      <option value="In Progress">In Progress</option>
+                      <option value="Completed">Completed</option>
                     </select>
                   </td>
-                  <td>
-                    <div style={{display: 'flex', gap: '8px', alignItems: 'center'}}>
+                  <td className="align-middle">
+                    <div className="flex gap-3 items-center">
                       {task.status !== 'Assigned' && (
                         <Link href={`/tasks/${task.id}/assign`} className="btn btn-primary" style={{padding: '6px 12px', fontSize: '13px'}}>
                           Smart Match ✨
